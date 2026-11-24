@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Phonker Shop — донат в игры</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
+<script>window.PHONKER_API="";/* адрес бота, если сайт лежит отдельно от бота, например "https://bot.example.com"; пусто = тот же домен */</script>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="logo.png">
+</head>
+<body>
+<canvas id="c"></canvas>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feImage id="map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="m"/><feDisplacementMap in="SourceGraphic" in2="m" scale="46" xChannelSelector="R" yChannelSelector="B"/></filter></svg>
+
+<header><div class="nav glass">
+  <a class="logo" href="#top"><b><span class="lp">P</span><img src="logo.png" alt="" onerror="this.remove()" onload="this.previousSibling.style.display='none'"></b><span>PHONKER <em>SHOP</em></span></a>
+  <nav class="links" id="links"><a href="#top">Главная</a><a href="#games">Каталог</a><a href="#faq">Вопросы</a><a href="#help">Поддержка</a></nav>
+  <button class="ib" onclick="theme()" aria-label="Тема"><i data-ic="sun" id="ti"></i></button>
+  <button class="ib" onclick="panel('cart')" aria-label="Корзина"><i data-ic="cart"></i><small id="cnt">0</small></button>
+  <button class="me" onclick="panel('prof')"><div class="av" id="av1"></div><span id="nm1">Гость</span></button>
+</div></header>
+
+<nav class="tabbar glass" id="tabbar">
+  <a href="#top" class="on"><i data-ic="home"></i>Главная</a>
+  <a href="#games"><i data-ic="grid"></i>Каталог</a>
+  <a href="#faq"><i data-ic="faq"></i>Вопросы</a>
+  <a href="#help"><i data-ic="chat"></i>Помощь</a>
+  <a href="#" target="_blank" rel="noopener" id="ordtab" style="display:none"><i data-ic="cart"></i>Заказы</a>
+  <button onclick="panel('prof')"><i data-ic="user"></i>Профиль</button>
+</nav>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <span class="tag glass">Быстро · Дёшево · Надёжно</span>
+    <h1>Донат в игры<br>без <em>переплат</em></h1>
+    <p>Гемы, пассы и особые акции для Brawl Stars, Clash Royale и Clash of Clans. Оплата рублями, в том числе через СБП.</p>
+  </div>
+
+  <section id="games"><h2>Выбери игру</h2><p class="sub">Откроем актуальные цены и товары.</p><div class="games" id="gamesBox"></div></section>
+
+  <section id="shop">
+    <div class="top"><button class="back glass" onclick="home()">Назад</button><h2 id="gt" style="margin:0;display:flex;align-items:center;gap:12px"></h2></div>
+    <div class="tabs" id="tabs"></div><div class="grid" id="grid"></div>
+  </section>
+
+  <div class="hero hero2">
+    <a class="btn gl" style="margin-left:0" href="https://t.me/PhonkerOt" target="_blank" rel="noopener" onclick="openReviews();return false">Отзывы</a>
+    <div class="stats"><div class="glass"><b>1000+</b><span>отзывов</span></div><div class="glass"><b>24/7</b><span>без выходных</span></div><div class="glass"><b>3</b><span>игры в каталоге</span></div></div>
+    <div class="feats">
+      <div class="feat glass"><b>Быстрая выдача</b><span>Обычно в течение нескольких минут после оплаты</span></div>
+      <div class="feat glass"><b>Без пароля</b><span>Пароль от аккаунта не нужен и мы его не просим</span></div>
+      <div class="feat glass"><b>Оплата по СБП</b><span>Платишь рублями прямо на сайте</span></div>
+      <div class="feat glass"><b>Поддержка 24/7</b><span>Поможем до и после покупки</span></div>
+    </div>
+  </div>
+
+  <!-- БАННЕРЫ: положи картинку в папку site (например banner-passcase.webp) - подхватится по data-img автоматически -->
+  <div class="banners">
+    <div class="bn glass" data-img="banner-passcase.webp" onclick="bn('bs','Пассы')"><small>Новинка · Brawl Stars</small><h3>Pass Case — 359 ₽</h3><span>Открой кейс: Brawl Pass, Plus или Pro, шанс у каждого 33,3% →</span></div>
+    <div class="bn glass" onclick="bn('bs','Пассы')"><small>Пассы</small><h3>Brawl Pass, Plus и Pro Pass</h3><span>Смотреть →</span></div>
+    <div class="bn glass" onclick="bn('bs','Гемы')"><small>Гемы</small><h3>Гемы для всех игр</h3><span>Смотреть →</span></div>
+    <div class="bn glass" onclick="bn('cr','Пассы')"><small>Clash Royale</small><h3>Pass Royale и гемы</h3><span>Смотреть →</span></div>
+    <div class="bn glass" onclick="bn('coc','Золотой пропуск')"><small>Clash of Clans</small><h3>Золотой пропуск и гемы</h3><span>Смотреть →</span></div>
+    <div class="bn glass" onclick="bn('bs','Особые акции')"><small>Особые акции</small><h3>Скины, пины, ранний доступ</h3><span>Смотреть →</span></div>
+  </div>
+
+  <section id="how"><h2>Как это работает</h2><p class="sub">Три шага.</p>
+    <div class="steps">
+      <div class="step glass"><b>01</b><h3>Выбираешь товар</h3><p>Кладёшь нужное в корзину, можно несколько позиций.</p></div>
+      <div class="step glass"><b>02</b><h3>Оплачиваешь по СБП</h3><p>Выбираешь способ оплаты и платишь прямо на сайте.</p></div>
+      <div class="step glass"><b>03</b><h3>Получаешь донат</h3><p>Выдаём и просим оставить отзыв.</p></div>
+    </div></section>
+
+  <section id="faq"><h2>Вопросы и ответы</h2><p class="sub">Самое частое.</p><div class="faq" id="faqBox"></div></section>
+
+  <section id="help"><div class="cta glass"><h2>Нужна помощь?</h2><p class="sub">Поддержка поможет по заказу, оплате и любым вопросам.</p>
+    <a class="btn main" href="https://t.me/Phonker_sup" target="_blank" rel="noopener">Написать в поддержку</a></div></section>
+  <footer><p>© Phonker Shop · <a href="https://telegra.ph/Polzovatelskoe-soglashenie-09-28-39" target="_blank" rel="noopener">Соглашение</a> · <a href="https://telegra.ph/Politika-konfidencialnosti-09-28-107" target="_blank" rel="noopener">Конфиденциальность</a> · <a href="https://telegra.ph/Proverka-akkaunta-pered-pokupkoj-09-29-4" target="_blank" rel="noopener">Проверка аккаунта</a></p></footer>
+</main>
+
+<div class="shade" id="shade" onclick="panel()"></div>
+<aside class="drawer glass" id="cart">
+  <h3>Корзина <button class="ib" onclick="panel()" aria-label="Закрыть">✕</button></h3>
+  <div class="list" id="list"></div>
+  <div class="note" id="rc"></div>
+  <div class="note glass" id="chn" style="display:none;padding:12px 14px;border-radius:18px"></div>
+  <input class="inp" id="tag" placeholder="Тег или ник в игре (если нужно)">
+  <div class="note glass" style="padding:12px 14px;border-radius:18px">❗️ <b>Перед покупкой обязательно проверьте</b>, можно ли донатить на ваш аккаунт: <a href="https://telegra.ph/Proverka-akkaunta-pered-pokupkoj-09-29-4" target="_blank" rel="noopener">проверка аккаунта</a>.<br>⚠️ Шанс на откат доната составляет 15%.</div>
+  <div style="display:flex;gap:8px"><input class="inp" id="promo" placeholder="Промокод (если есть)" autocapitalize="characters"><button class="btn gl" style="margin:0;padding:12px 18px" onclick="applyPromo()">ОК</button></div>
+  <div class="note" id="pmsg"></div>
+  <div class="pay" id="pay">
+    <label><input type="radio" name="p" value="2" checked><div>СБП<small>Оплата в приложении любого банка</small></div></label>
+  </div>
+  <div class="sum"><span>Итого</span><span id="sum">0 ₽</span></div>
+  <button class="btn main" id="buy" onclick="buy()">Оплатить</button>
+  <a class="btn main" id="payl" href="#" style="display:none" target="_blank" rel="noopener">Перейти к оплате</a>
+  <button class="btn gl" id="chk" style="display:none;margin:0" onclick="checkPay()">Проверить оплату</button>
+</aside>
+<aside class="drawer glass" id="prof">
+  <h3>Профиль <button class="ib" onclick="panel()" aria-label="Закрыть">✕</button></h3>
+  <div class="prof"><div class="av" id="av2"></div><h4 id="nm2">Гость</h4><p id="un2">Войди через Telegram</p><p id="id2"></p></div>
+  <a class="btn main" id="login" href="#" target="_blank" rel="noopener" onclick="return login()">Войти через Telegram</a>
+  <button class="btn gl" id="loginpw" style="margin:0" onclick="panel();gShow('in',true)">Войти по логину и паролю</button>
+  <a class="btn gl" style="margin:0" href="#" id="ord" target="_blank" rel="noopener" style="display:none">Мои заказы</a>
+  <button class="btn main" id="admbtn" style="display:none;margin:0" onclick="openAdm()">⚙️ Админка</button>
+  <a class="btn gl" style="margin:0" href="https://t.me/Phonker_sup" target="_blank" rel="noopener">Поддержка</a>
+  <button class="btn gl" style="margin:0" onclick="theme()">Сменить тему</button>
+</aside>
+<div class="gate" id="gate">
+  <div class="orbs"><i></i><i></i><i></i></div>
+  <button class="ib gx" id="gx" onclick="gClose()" aria-label="Закрыть" style="display:none">✕</button>
+  <div class="gwrap">
+    <span class="gbadge glass">phonker.shop</span><span class="gwel">ДОБРО ПОЖАЛОВАТЬ</span>
+    <h1>Твоя игра.<br><em>Твой Phonker Shop.</em></h1>
+    <p class="gsub">Заказы, поддержка и игровые покупки в одном аккаунте.</p>
+    <div class="gpts"><span><b>✓</b> Один логин</span><span><b>✓</b> Все покупки вместе</span></div>
+    <div class="gcard glass" id="gcard">
+      <div class="ghead"><div class="gico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+        <div><h3 id="gh">Создать аккаунт</h3><p id="gs">Придумай логин, почту и пароль. Это быстро.</p></div></div>
+      <div class="seg" id="seg"><i id="segi"></i><button class="on" id="sg_reg" onclick="gMode('reg')">Регистрация</button><button id="sg_in" onclick="gMode('in')">Вход</button></div>
+      <div class="note" id="ghint" style="margin-bottom:10px;color:var(--acc);font-weight:700"></div>
+      <div class="gf"><label for="g_login">Логин</label><input class="inp" id="g_login" maxlength="24" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="Например, phonker123"></div>
+      <div class="gf" id="gf_mail"><label for="g_mail">Почта</label><input class="inp" id="g_mail" type="email" maxlength="254" autocomplete="email" autocapitalize="off" placeholder="name@example.com"></div>
+      <div class="gf"><label for="g_pw">Пароль</label><div class="pw"><input class="inp" id="g_pw" type="password" maxlength="128" autocomplete="new-password" placeholder="Не меньше 8 символов"><button type="button" onclick="gEye()" aria-label="Показать пароль" id="g_eye">👁</button></div></div>
+      <div class="gerr" id="gerr"></div>
+      <button class="btn main gbtn" id="gbtn" onclick="gSubmit(event)"><span id="gbt">Зарегистрироваться</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <div class="gnote"><span>🔒</span><span>Пароль хранится на сервере в защищённом виде. Не используй пароль от других сайтов. Аккаунт привяжется к твоему Telegram.</span></div>
+    </div>
+  </div>
+</div>
+<aside class="drawer glass adm" id="adm">
+  <h3>Админка <button class="ib" onclick="panel()" aria-label="Закрыть">✕</button></h3>
+  <div class="tabs" id="atabs"></div>
+  <div class="list" id="abody"></div>
+</aside>
+<div class="toast glass" id="toast">Добавлено в корзину</div>
+
+<div class="cs" id="cs"><div class="cs-box"><h3>Pass Case</h3><p>Открываем кейс...</p><div class="cs-win"><div class="cs-tr" id="cstr"></div></div><div class="cs-res" id="csres"></div><button class="btn main cs-ok" id="csok" onclick="csClose()">Забрать</button></div></div>
+<script src="images.js"></script>
+<script src="a2hs.js"></script>
+<script src="codelogin.js"></script>
+<script src="chat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
