@@ -8,7 +8,7 @@ function render(step,err){
  d.className="on";
  var h='<div class="bx"><button class="x" aria-label="Закрыть" onclick="closeCodeLogin()">✕</button><h3>Вход через Telegram</h3>';
  if(step==1){
-  h+='<p>Введи свой Telegram username. Бот пришлёт тебе код. Сначала нажми Start в нашем боте с этого аккаунта.</p><input class="inp" id="cl_u" maxlength="33" autocapitalize="off" spellcheck="false" placeholder="@username">'
+  h+='<p><b>1.</b> Нажми кнопку ниже, открой нашего бота и нажми <b>Start</b>. Без этого код не придёт.</p><a id="cl_bot" class="go" href="https://t.me/PhonkerShopBOT" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin:0 0 14px">Открыть бота и нажать Start</a><p><b>2.</b> Потом вернись сюда, введи свой Telegram username и получи код.</p><input class="inp" id="cl_u" maxlength="33" autocapitalize="off" spellcheck="false" placeholder="@username">'
 }else{
   h+='<p>Мы отправили код в Telegram. Он действует 5 минут. Код создаёт только бот, придумать его нельзя. Никому его не сообщай.</p><input class="inp" id="cl_c" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="6 цифр">'
 }
